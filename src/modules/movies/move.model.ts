@@ -24,4 +24,4 @@ const MovieSchema = new Schema<TMovie>({
 
 // Create and export the models
 
-export const Move =model <TMovie> ("Movie",MovieSchema);
+export const Movie =model <TMovie> ("Movie",MovieSchema);
