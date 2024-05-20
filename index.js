@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema({
     }
 })
 // create model
-const product=mongoose.model('product',productSchema);
+const Product=mongoose.model('product',productSchema);
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -31,10 +31,10 @@ app.post('/products',async(req,res)=>{
     try {
     const {title,price,describe}=req.body;
     // create product instance of model(row)
-    const newProduct= new product({title,price,describe});
+    const newProduct= new Product({title,price,describe});
     // save the product ot the database
      const ProductData=await newProduct.save()
-     res.status(2001).send(ProductData)
+     res.status(200).send(ProductData)
     } catch (error) {
         res.status(500).send({
             message:error.message
@@ -42,6 +42,43 @@ app.post('/products',async(req,res)=>{
         
     }
 })
+
+// find single product
+app.get('/products/:id',async (req,res)=>{
+    try {
+        const id=req.params.id;
+        const product=await Product.findById({_id:id});
+        
+        if(product){
+            res.status(200).send(product)
+        }else{
+            res.status(404).send({
+                message:"Products not found"
+            })
+        }
+    } catch (error) {
+        res.status(500).send({message:error.message})
+        
+    }
+})
+
+// get all products
+app.get('/products',async (req,res)=>{
+    try {
+        const products=await product.find();
+        if(products){
+            res.status(200).send(products)
+        }else{
+            res.status(404).send({
+                message:"Products not found"
+            })
+        }
+    } catch (error) {
+        res.status(500).send({message:error.message})
+        
+    }
+})
+
 
 async function main() {
     try {
