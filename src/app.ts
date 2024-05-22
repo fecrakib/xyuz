@@ -4,8 +4,10 @@ import { ProductRoutes } from './modules/products.route';
 const app = express();
 app.use (express.json())
 
-app.use('/api/order',ProductRoutes);
-app.use('/api/products',ProductRoutes)
+app.use('/api/products',ProductRoutes.productRouter)
+
+app.use('/api/order',ProductRoutes.router);
+
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello World!');

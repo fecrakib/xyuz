@@ -3,8 +3,8 @@ import { TProduct, TProductPurchase } from "./products.interface";
 
 
 export const creteOrder = async (orderData: TProductPurchase)=>{
-    const order =new Order (orderData);
-    return await order .save()
+    const orderProduct =new Order (orderData);
+    return await orderProduct .save()
 }
 
 
