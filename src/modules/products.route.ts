@@ -1,16 +1,26 @@
 
 import express from 'express'
 
-import { createOrderHandler, createProductHandler } from './products.controller';
+import { GetAllProducts, GetSingleProductById, createOrderHandler, createProductHandler, getAllOrders,  getOrdersByEmail } from './products.controller';
+
+
 
 const router=express.Router()
+// product router
 const productRouter=express.Router()
 productRouter.post('/',createProductHandler);
 
+// productRouter.get('/',GetSingleProductById) 
 
+productRouter.get('/',GetAllProducts)
+
+// order router
 router.post ('/',createOrderHandler)
 
+router.get('/',getAllOrders)
 
+const OrderGetByEmail=express.Router()
+OrderGetByEmail.get('/', getOrdersByEmail);
 
 
 
@@ -19,4 +29,6 @@ router.post ('/',createOrderHandler)
 export const ProductRoutes={
     router,
     productRouter,
+    OrderGetByEmail,
+
 }
