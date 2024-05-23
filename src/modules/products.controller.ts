@@ -1,7 +1,8 @@
-import { date } from "zod";
+
 import { creteOrder, createProduct, getAllOrder, getOrderByEmail,  getAllProducts, singleProductGetById, updateProductById, deleteProductById} from "./products.service"
 import { ProductValidationSchema, UpdateProductSchema, orderSchema } from "./validateData"
 import { Request, Response } from 'express';
+import { Product } from "./products.model";
 
 
 
@@ -140,6 +141,49 @@ export const deletedProduct = async (req:Request,res:Response)=>{
         });
     }
 }
+
+// search product 
+
+export const searchProducts = async (req: Request, res: Response) => {
+    try {
+        const { searchTerm } = req.query;
+        if (!searchTerm) {
+            return res.status(400).json({
+                success: false,
+                message: 'Search term is required'
+            });
+        }
+
+        const regex = new RegExp(searchTerm as string, 'i'); // 'i' makes it case-insensitive
+        const results = await Product.find({
+            $or: [
+                { name: regex },
+                { description: regex },
+                { category: regex },
+                { tags: regex }
+            ]
+        });
+
+        if (results.length === 0) {
+            return res.json({
+                success: false,
+                message: `No products found matching search term '${searchTerm}'`
+            });
+        }
+
+        res.json({
+            success: true,
+            message: `Products matching search term '${searchTerm}' fetched successfully!`,
+            data: results
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Could not fetch products!',
+           
+        });
+    }
+};
 
 // create order
 

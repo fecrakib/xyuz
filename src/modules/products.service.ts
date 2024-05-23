@@ -53,9 +53,7 @@ export const getAllOrder = async ()=>{
 
 // get order email
 export const getOrderByEmail = async (email: string) => {
-    try {
+   
         return await Order.find({ email });
-    } catch (error) {
-        throw error;
-    }
+    
 };
