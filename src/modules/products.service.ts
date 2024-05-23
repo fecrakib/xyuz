@@ -21,6 +21,16 @@ export const singleProductGetById = async (id:string) =>{
     return await Product.findById(id);
 }
 
+// for update Product information
+
+export const updateProductById = async (id:string,update: Partial <TProduct> )=>{
+    const product = await Product.findById(id);
+    if (!product) {
+        return null;
+    }
+    Object.assign(product, update);
+    return await product.save();
+}
 
 // create order
 

@@ -1,6 +1,6 @@
 import { date } from "zod";
-import { creteOrder, createProduct, getAllOrder, getOrderByEmail,  getAllProducts, singleProductGetById} from "./products.service"
-import { ProductValidationSchema, orderSchema } from "./validateData"
+import { creteOrder, createProduct, getAllOrder, getOrderByEmail,  getAllProducts, singleProductGetById, updateProductById} from "./products.service"
+import { ProductValidationSchema, UpdateProductSchema, orderSchema } from "./validateData"
 import { Request, Response } from 'express';
 
 
@@ -86,6 +86,33 @@ export const GetSingleProductById= async (req:Request,res:Response)=>{
     }
 }
 
+//  update product information
+
+export const updateProductInformation = async (req:Request,res:Response)=>{
+  try {
+    const productId = req.params.productId;
+    const updateData = UpdateProductSchema.parse(req.body);
+    const result = updateProductById(productId,updateData);
+    if (result) {
+        res.json({
+            success: true,
+            message: "Product updated successfully!",
+            data: result,
+        });
+    } else {
+        res.status(404).json({
+            success: false,
+            message: "Product not found",
+        });
+    }
+  } catch (error) {
+    res.status(500).json({
+        success: false,
+        message: "Could not update product!",
+        error: error,
+    });
+  }
+}
 
 // create order
 

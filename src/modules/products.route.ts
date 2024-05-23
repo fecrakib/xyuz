@@ -1,7 +1,7 @@
 
 import express from 'express'
 
-import { GetAllProducts, GetSingleProductById, createOrderHandler, createProductHandler, getAllOrders,  getOrdersByEmail } from './products.controller';
+import { GetAllProducts, GetSingleProductById, createOrderHandler, createProductHandler, getAllOrders,  getOrdersByEmail, updateProductInformation } from './products.controller';
 
 
 
@@ -11,6 +11,9 @@ const productRouter=express.Router()
 productRouter.post('/',createProductHandler);
 
 productRouter.get('/:productId',GetSingleProductById) 
+// update for route
+productRouter.post('/:productId',updateProductInformation)
+
 
 productRouter.get('/',GetAllProducts)
 
