@@ -32,6 +32,12 @@ export const updateProductById = async (id:string,update: Partial <TProduct> )=>
     return await product.save();
 }
 
+// delete a product by Id
+
+export const deleteProductById = async (id:string )=>{
+    return await Product.findByIdAndDelete((id))
+}
+
 // create order
 
 export const creteOrder = async (orderData: TProductPurchase)=>{
