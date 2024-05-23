@@ -10,7 +10,7 @@ const router=express.Router()
 const productRouter=express.Router()
 productRouter.post('/',createProductHandler);
 
-// productRouter.get('/',GetSingleProductById) 
+productRouter.get('/:productId',GetSingleProductById) 
 
 productRouter.get('/',GetAllProducts)
 
